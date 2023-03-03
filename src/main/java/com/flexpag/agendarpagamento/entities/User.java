@@ -1,11 +1,16 @@
 package com.flexpag.agendarpagamento.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,6 +23,11 @@ public class User implements Serializable {
 	private Long id;
 	private String name;
 	private String cpf;
+	
+	//Associação
+	@JsonIgnore
+	@OneToMany(mappedBy ="client")
+	private List<Payment> payments= new ArrayList<>();
 	
 	public User() {}
 
@@ -50,6 +60,11 @@ public class User implements Serializable {
 
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	//Como é uma collection só será preciso o set
+	public List<Payment> getPayments() {
+		return payments;
 	}
 
 	@Override
