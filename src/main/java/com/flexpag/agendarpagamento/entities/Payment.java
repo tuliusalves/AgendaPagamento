@@ -1,29 +1,43 @@
 package com.flexpag.agendarpagamento.entities;
 
 import java.io.Serializable;
+import java.time.Instant;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="payment")
+@Table(name ="Pagamento")
 public class Payment implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Long identificationNumber;
 	private String recipientBank;
-	private String payingName;
 	private Double paymentAmount;
+	/*Usando a anotação @JsonFormat
+	 *no formato("ano-mês-dia'T' hora:min:seg'Z', timezone="padrão universal grenuwich"*/
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern ="yyyy:MM:dd'T'HH:mm:ss'Z'", timezone="GMT")
+	private Instant dueDate;
 	/*Falta por a data de vencimento e data débito*/
 	public Payment() {}
-	
-	public Payment(Long identificationNumber, String recipientBank, String payingName, Double paymentAmount) {
+	//Criando associação com usuário
+	@ManyToOne
+	@JoinColumn(name= "client_id")
+	private User client;
+
+	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount,
+			Instant dueDate, User client) {
 		super();
 		this.identificationNumber = identificationNumber;
 		this.recipientBank = recipientBank;
-		this.payingName = payingName;
 		this.paymentAmount = paymentAmount;
+		this.dueDate = dueDate;
+		this.client = client;
 	}
 
 	public Long getidentificationNumber() {
@@ -42,14 +56,6 @@ public class Payment implements Serializable{
 		this.recipientBank = recipientBank;
 	}
 
-	public String getpayingName() {
-		return payingName;
-	}
-
-	public void setpayingName(String payingName) {
-		this.payingName = payingName;
-	}
-
 	public Double getpaymentAmount() {
 		return paymentAmount;
 	}
@@ -60,6 +66,24 @@ public class Payment implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	
+	public Instant getDueDate() {
+		return dueDate;
+	}
+
+
+	public void setDueDate(Instant dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public User getClient() {
+		return client;
+	}
+
+	public void setUserClient(User client) {
+		this.client = client;
 	}
 
 	@Override
