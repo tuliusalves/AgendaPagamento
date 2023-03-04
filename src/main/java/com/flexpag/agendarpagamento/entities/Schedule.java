@@ -1,11 +1,10 @@
 package com.flexpag.agendarpagamento.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
-
-//import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -21,16 +20,19 @@ public class Schedule implements Serializable {
 	@Id
 	private Long id;
 	private Integer scheduleStatus;
-	private Date sheduleDate;
+	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern ="yyyy:MM:dd'T'HH:mm:ss'Z'", timezone="GMT")
+	private Instant sheduleDate;
 	
 	//Associação
 	@ManyToOne
 	@JoinColumn(name= "client_id")
 	private User client;
 	
+	
+	
 	public Schedule() {}
 
-	public Schedule(Long id, ScheduleStatus scheduleStatus, Date sheduleDate, User client) {
+	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User client) {
 		this.id = id;
 		setScheduleStatus(scheduleStatus);
 		this.sheduleDate = sheduleDate;
@@ -55,11 +57,11 @@ public class Schedule implements Serializable {
 		}
 	}
 
-	public Date getSheduleDate() {
+	public Instant getSheduleDate() {
 		return sheduleDate;
 	}
 
-	public void setSheduleDate(Date sheduleDate) {
+	public void setSheduleDate(Instant sheduleDate) {
 		this.sheduleDate = sheduleDate;
 	}
 
