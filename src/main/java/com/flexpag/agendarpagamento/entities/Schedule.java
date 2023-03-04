@@ -3,8 +3,12 @@ package com.flexpag.agendarpagamento.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+//import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -14,15 +18,21 @@ public class Schedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Long id;
-	private String scheduleStatus;
-	private Date SheduleDate;
+	private boolean scheduleStatus;
+	private Date sheduleDate;
+	
+	//Associação
+	@ManyToOne
+	@JoinColumn(name= "client_id")
+	private User client;
 	
 	public Schedule() {}
 
-	public Schedule(Long id, String scheduleStatus, Date sheduleDate) {
+	public Schedule(Long id, Boolean scheduleStatus, Date sheduleDate, User client) {
 		this.id = id;
 		this.scheduleStatus = scheduleStatus;
-		SheduleDate = sheduleDate;
+		this.sheduleDate = sheduleDate;
+		this.client = client;
 	}
 
 	public Long getId() {
@@ -33,20 +43,28 @@ public class Schedule implements Serializable {
 		this.id = id;
 	}
 
-	public String getScheduleStatus() {
+	public Boolean getScheduleStatus() {
 		return scheduleStatus;
 	}
 
-	public void setScheduleStatus(String scheduleStatus) {
+	public void setScheduleStatus(Boolean scheduleStatus) {
 		this.scheduleStatus = scheduleStatus;
 	}
 
 	public Date getSheduleDate() {
-		return SheduleDate;
+		return sheduleDate;
 	}
 
 	public void setSheduleDate(Date sheduleDate) {
-		SheduleDate = sheduleDate;
+		this.sheduleDate = sheduleDate;
+	}
+
+	public User getClient() {
+		return client;
+	}
+
+	public void setClient(User client) {
+		this.client = client;
 	}
 
 	@Override
