@@ -13,15 +13,20 @@ import com.flexpag.agendarpagamento.repositories.PaymentRepository;
 public class PaymentService {
 	@Autowired
 	private PaymentRepository repository;
-	
-	//Retornando todos os pagamentos
-	public List<Payment> findAll(){
+
+	// Retornando todos os pagamentos
+	public List<Payment> findAll() {
 		return repository.findAll();
 	}
-	
-	//Retornando pagamento por Id
+
+	// Retornando pagamento por Id
 	public Payment findById(Long id) {
 		Optional<Payment> pay = repository.findById(id);
 		return pay.get();
+	}
+
+	// Método de inserir user
+	public Payment insert(Payment obj) {
+		return repository.save(obj);
 	}
 }
