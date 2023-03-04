@@ -5,10 +5,12 @@ import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,9 +31,11 @@ public class Payment implements Serializable{
 	@ManyToOne
 	@JoinColumn(name= "client_id")
 	private User client;
+	
+	@OneToOne(mappedBy="payment", cascade= CascadeType.ALL)
+	private Schedule schedule;
 
-	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount,
-			Instant dueDate, User client) {
+	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount, Instant dueDate, User client) {
 		super();
 		this.identificationNumber = identificationNumber;
 		this.recipientBank = recipientBank;
@@ -84,6 +88,16 @@ public class Payment implements Serializable{
 
 	public void setUserClient(User client) {
 		this.client = client;
+	}
+	
+	
+
+	public Schedule getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(Schedule schedule) {
+		this.schedule = schedule;
 	}
 
 	@Override
