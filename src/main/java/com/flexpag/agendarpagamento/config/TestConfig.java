@@ -45,10 +45,13 @@ public class TestConfig implements CommandLineRunner{
 		Payment pay2= new Payment(2L,"Itaú",420.50,Instant.parse("2021-03-16T12:10:07Z"),user2);
 		
 		Schedule schedule1= new Schedule(1L,ScheduleStatus.PAID,Instant.parse("2020-06-20T19:50:07Z"),
-				user1);
+				user1,pay1);
 		Schedule schedule2= new Schedule(2L,ScheduleStatus.PENDING,Instant.parse("2020-06-20T19:50:07Z"),
-				user2);
+				user2,pay2);
 		
+		
+		pay1.setSchedule(schedule1);
+		pay2.setSchedule(schedule2);
 		userRepository.saveAll(Arrays.asList(user1,user2));
 		paymentRepository.saveAll(Arrays.asList(pay1,pay2));
 		scheduleRepository.saveAll(Arrays.asList(schedule1,schedule2));

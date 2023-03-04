@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,15 +30,20 @@ public class Schedule implements Serializable {
 	@JoinColumn(name= "client_id")
 	private User client;
 	
+	@OneToOne
+	@MapsId
+	private Payment payment;
+	
 	
 	
 	public Schedule() {}
 
-	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User client) {
+	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User client, Payment payment) {
 		this.id = id;
 		setScheduleStatus(scheduleStatus);
 		this.sheduleDate = sheduleDate;
 		this.client = client;
+		this.payment= payment;
 	}
 
 	public Long getId() {
@@ -71,6 +78,16 @@ public class Schedule implements Serializable {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+	
+	
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	@Override
