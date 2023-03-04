@@ -29,6 +29,10 @@ public class User implements Serializable {
 	@OneToMany(mappedBy ="client")
 	private List<Payment> payments= new ArrayList<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy ="client")
+	private List<Schedule> shedules= new ArrayList<>();
+	
 	public User() {}
 
 	public User(Long id, String name, String cpf) {
@@ -63,9 +67,16 @@ public class User implements Serializable {
 	}
 	
 	//Como é uma collection só será preciso o set
-	public List<Payment> getPayments() {
+	public List<Payment> getPayments(Payment pay) {
+		this.payments.add(pay);
 		return payments;
+	}	
+
+	public List<Schedule> getShedules(Schedule schedule) {
+		this.shedules.add(schedule);
+		return shedules;
 	}
+
 
 	@Override
 	public int hashCode() {
