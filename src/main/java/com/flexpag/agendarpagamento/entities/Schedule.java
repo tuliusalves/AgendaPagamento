@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 
 import jakarta.persistence.Entity;
@@ -30,6 +31,7 @@ public class Schedule implements Serializable {
 	@JoinColumn(name= "client_id")
 	private User client;
 	
+	@JsonIgnore
 	@OneToOne
 	@MapsId
 	private Payment payment;
