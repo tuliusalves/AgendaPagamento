@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Profile;
 import com.flexpag.agendarpagamento.entities.Payment;
 import com.flexpag.agendarpagamento.entities.Schedule;
 import com.flexpag.agendarpagamento.entities.User;
+import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 //import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 import com.flexpag.agendarpagamento.repositories.PaymentRepository;
 import com.flexpag.agendarpagamento.repositories.ScheduleRepository;
@@ -51,11 +52,11 @@ public class TestConfig implements CommandLineRunner{
 		
 		LocalDate data01 = LocalDate.parse("2023-03-17");
 		Date date= Date.from(data01.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Schedule schedule1= new Schedule(1L,false,date, user1);
+		Schedule schedule1= new Schedule(1L,ScheduleStatus.PAID,date, user1);
 		
 		data01 = LocalDate.parse("2023-02-17");
 		date= Date.from(data01.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		Schedule schedule2= new Schedule(2L,true,date,user2);
+		Schedule schedule2= new Schedule(2L,ScheduleStatus.PENDING,date,user2);
 		
 		userRepository.saveAll(Arrays.asList(user1,user2));
 		scheduleRepository.saveAll(Arrays.asList(schedule1,schedule2));

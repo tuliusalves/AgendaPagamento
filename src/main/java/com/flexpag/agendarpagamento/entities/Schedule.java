@@ -3,6 +3,8 @@ package com.flexpag.agendarpagamento.entities;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
+
 //import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 
 import jakarta.persistence.Entity;
@@ -18,7 +20,7 @@ public class Schedule implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Long id;
-	private boolean scheduleStatus;
+	private Integer scheduleStatus;
 	private Date sheduleDate;
 	
 	//Associação
@@ -28,9 +30,9 @@ public class Schedule implements Serializable {
 	
 	public Schedule() {}
 
-	public Schedule(Long id, Boolean scheduleStatus, Date sheduleDate, User client) {
+	public Schedule(Long id, ScheduleStatus scheduleStatus, Date sheduleDate, User client) {
 		this.id = id;
-		this.scheduleStatus = scheduleStatus;
+		setScheduleStatus(scheduleStatus);
 		this.sheduleDate = sheduleDate;
 		this.client = client;
 	}
@@ -43,12 +45,14 @@ public class Schedule implements Serializable {
 		this.id = id;
 	}
 
-	public Boolean getScheduleStatus() {
-		return scheduleStatus;
+	public ScheduleStatus getScheduleStatus() {
+		return ScheduleStatus.valueOf(scheduleStatus);
 	}
 
-	public void setScheduleStatus(Boolean scheduleStatus) {
-		this.scheduleStatus = scheduleStatus;
+	public void setScheduleStatus(ScheduleStatus scheduleStatus) {
+		if(scheduleStatus != null) {
+			this.scheduleStatus = scheduleStatus.getCode();
+		}
 	}
 
 	public Date getSheduleDate() {
