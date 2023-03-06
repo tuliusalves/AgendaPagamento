@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flexpag.agendarpagamento.entities.Schedule;
+import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 import com.flexpag.agendarpagamento.repositories.ScheduleRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class ScheduleService {
 	public void delete(Long id) {
 		repository.deleteById(id);
 
+	}
+	public void deleteAll() {
+		repository.deleteAll();
 	}
 
 	public List<Schedule> findAll() {
@@ -49,4 +53,5 @@ public class ScheduleService {
 	public List<Schedule> findByTesteName(String name) {
 		return repository.findByName(name);
 	}
+	
 }

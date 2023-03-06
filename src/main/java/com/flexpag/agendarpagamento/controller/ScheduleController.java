@@ -15,60 +15,86 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flexpag.agendarpagamento.entities.Schedule;
+import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 import com.flexpag.agendarpagamento.services.ScheduleService;
 
 @RestController
-@RequestMapping(value = "/teste")
+@RequestMapping(value = "/schedules")
 public class ScheduleController {
 
 	@Autowired
-	ScheduleService testeService;
+	ScheduleService scheduleService;
 
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<String> delete(@PathVariable Long id) {
-
 		try {
-			// código para excluir o usuário com o ID fornecido
-			testeService.delete(id);
-
-			return ResponseEntity.ok("Usuário excluído com sucesso");
+			Schedule scheduleEntity = scheduleService.findById(id);
+			if(scheduleEntity == null) {
+				return ResponseEntity.notFound().build();
+			}
+			if(scheduleEntity.getScheduleStatus() == ScheduleStatus.PENDING) {
+				scheduleService.delete(id);
+				return ResponseEntity.ok("Agendamento excluído com sucesso");
+			}else {
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).
+						body("O agendamento não pode ser excluído porque está como PAID");
+			}
+			
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("Erro ao excluir o usuário: " + e.getMessage());
+					.body("Erro ao excluir o agendamento: " + e.getMessage());
 		}
 
 	}
-	
+
+	@DeleteMapping
+	public ResponseEntity<String> deleteAll() {
+		List<Schedule> scheduleEntity = scheduleService.findAll();
+		
+		try {
+			for (Schedule aux : scheduleEntity) {
+				if (aux.getScheduleStatus() == ScheduleStatus.PENDING) {
+					scheduleService.delete(aux.getId());
+				}
+			}
+
+			return ResponseEntity.ok("Agendamento 'PENDING' excluídos com sucesso!");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("Erro ao excluir o agendamento: " + e.getMessage());
+		}
+	}
+
 	@PostMapping
-	public ResponseEntity<Schedule> create(@RequestBody Schedule obj){
-		Schedule saveTesteEntity= testeService.save(obj);
-		return ResponseEntity.status(HttpStatus.CREATED).body(saveTesteEntity);
+	public ResponseEntity<Schedule> create(@RequestBody Schedule obj) {
+		Schedule savescheduleEntity = scheduleService.save(obj);
+		return ResponseEntity.status(HttpStatus.CREATED).body(savescheduleEntity);
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<List<Schedule>>findAll(){
-		List<Schedule> TesteEntitys= testeService.findAll();
-		return ResponseEntity.ok().body(TesteEntitys);
+	public ResponseEntity<List<Schedule>> findAll() {
+		List<Schedule> scheduleEntitys = scheduleService.findAll();
+		return ResponseEntity.ok().body(scheduleEntitys);
 	}
-	
-	@GetMapping(value ="/{id}")
-	public ResponseEntity<Schedule> findById(@PathVariable Long id){
-		Schedule TesteEntity= testeService.findById(id);
-		return ResponseEntity.ok().body(TesteEntity);
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Schedule> findById(@PathVariable Long id) {
+		Schedule scheduleEntity = scheduleService.findById(id);
+		return ResponseEntity.ok().body(scheduleEntity);
 	}
-	
+
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<Schedule> update(@PathVariable Long id,@RequestBody Schedule obj ){
-		obj = testeService.update(id, obj);
+	public ResponseEntity<Schedule> update(@PathVariable Long id, @RequestBody Schedule obj) {
+		obj = scheduleService.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
-	
+
 	@GetMapping("/name/{name}")
-    public ResponseEntity<List<Schedule>> findByTesteName(@PathVariable String name) {
-        List<Schedule> testes = testeService.findByTesteName(name);
-        if (testes.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(testes);
-    }
+	public ResponseEntity<List<Schedule>> findByTesteName(@PathVariable String name) {
+		List<Schedule> testes = scheduleService.findByTesteName(name);
+		if (testes.isEmpty()) {
+			return ResponseEntity.noContent().build();
+		}
+		return ResponseEntity.ok(testes);
+	}
 }
