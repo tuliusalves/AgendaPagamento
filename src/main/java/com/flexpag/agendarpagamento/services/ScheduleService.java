@@ -25,10 +25,7 @@ public class ScheduleService {
 		Optional<Schedule> schedule = repository.findById(id);
 		return schedule.get();
 	}
-	
-	
-	
-	
+
 	//Método de inserir schedule
 		public Schedule insert(Schedule obj) {
 			return repository.save(obj);
@@ -51,4 +48,6 @@ public class ScheduleService {
 	private void updateData(Schedule entity, Schedule obj) {
 		entity.setSheduleDate(obj.getSheduleDate());
 	}
+	
+	
 }
