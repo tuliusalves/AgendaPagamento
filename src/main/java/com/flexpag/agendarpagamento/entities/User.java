@@ -12,7 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="users")
+@Table(name = "users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -21,20 +21,12 @@ public class User implements Serializable {
 	private Long id;
 	private String name;
 	private String cpf;
-	
-	/*Associação
-	@JsonIgnore
-	@OneToMany(mappedBy ="client")
-	private List<Payment> payments= new ArrayList<>();
-	
-	@JsonIgnore
-	@OneToMany(mappedBy ="client")
-	private List<Schedule> shedules= new ArrayList<>();*/
-	
-	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	   private List<TesteEntity> testeEntity;
-	
-	public User() {}
+
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Schedule> schedules;
+
+	public User() {
+	}
 
 	public User(Long id, String name, String cpf) {
 		super();
@@ -66,28 +58,15 @@ public class User implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	
-	
-	/*Como é uma collection só será preciso o set
-	public List<Payment> getPayments(Payment pay) {
-		this.payments.add(pay);
-		return payments;
-	}	
 
-	public List<Schedule> getShedules(Schedule schedule) {
-		this.shedules.add(schedule);
-		return shedules;
-	}*/
-
-	public List<TesteEntity> getTesteEntity() {
-		return testeEntity;
+	public List<Schedule> getSchedules() {
+		return schedules;
 	}
 
-	public void setTesteEntity(List<TesteEntity> testeEntity) {
-		this.testeEntity = testeEntity;
+	public void setsShedules(List<Schedule> schedules) {
+		this.schedules = schedules;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -96,9 +75,6 @@ public class User implements Serializable {
 		return result;
 	}
 
-
-
-	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -115,6 +91,5 @@ public class User implements Serializable {
 			return false;
 		return true;
 	}
-	
-	
+
 }
