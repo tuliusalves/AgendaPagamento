@@ -1,11 +1,9 @@
 package com.flexpag.agendarpagamento.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +12,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="Usuario")
+@Table(name ="users")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -24,14 +22,17 @@ public class User implements Serializable {
 	private String name;
 	private String cpf;
 	
-	//Associação
+	/*Associação
 	@JsonIgnore
 	@OneToMany(mappedBy ="client")
 	private List<Payment> payments= new ArrayList<>();
 	
 	@JsonIgnore
 	@OneToMany(mappedBy ="client")
-	private List<Schedule> shedules= new ArrayList<>();
+	private List<Schedule> shedules= new ArrayList<>();*/
+	
+	 @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	   private List<TesteEntity> testeEntity;
 	
 	public User() {}
 
@@ -66,7 +67,8 @@ public class User implements Serializable {
 		this.cpf = cpf;
 	}
 	
-	//Como é uma collection só será preciso o set
+	
+	/*Como é uma collection só será preciso o set
 	public List<Payment> getPayments(Payment pay) {
 		this.payments.add(pay);
 		return payments;
@@ -75,9 +77,17 @@ public class User implements Serializable {
 	public List<Schedule> getShedules(Schedule schedule) {
 		this.shedules.add(schedule);
 		return shedules;
+	}*/
+
+	public List<TesteEntity> getTesteEntity() {
+		return testeEntity;
 	}
 
+	public void setTesteEntity(List<TesteEntity> testeEntity) {
+		this.testeEntity = testeEntity;
+	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -86,6 +96,9 @@ public class User implements Serializable {
 		return result;
 	}
 
+
+
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

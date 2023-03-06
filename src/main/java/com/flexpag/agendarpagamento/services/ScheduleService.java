@@ -25,4 +25,30 @@ public class ScheduleService {
 		Optional<Schedule> schedule = repository.findById(id);
 		return schedule.get();
 	}
+	
+	
+	
+	
+	//Método de inserir schedule
+		public Schedule insert(Schedule obj) {
+			return repository.save(obj);
+		}
+		
+	//Método de deletar	
+	public void delete(Long id) {
+		repository.deleteById(id);
+	}
+	
+	public Schedule update(Long id, Schedule obj) {
+		Schedule entity = repository.getReferenceById(id);
+		if(entity.checkStatus(entity.getScheduleStatus()) !=true) {
+			updateData(entity, obj);
+		}
+		return repository.save(entity);	
+		
+	}
+	
+	private void updateData(Schedule entity, Schedule obj) {
+		entity.setSheduleDate(obj.getSheduleDate());
+	}
 }

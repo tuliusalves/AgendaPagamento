@@ -1,6 +1,5 @@
 package com.flexpag.agendarpagamento.entities;
 
-import java.io.Serializable;
 import java.time.Instant;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -8,6 +7,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -15,30 +16,35 @@ import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+
+
 @Entity
-@Table(name = "Agendamento")
-public class Schedule implements Serializable {
+@Table(name = "schedules")
+public class Schedule  {
 	
-	private static final long serialVersionUID = 1L;
 	@Id
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id; 
+	
 	private Integer scheduleStatus;
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern ="yyyy:MM:dd'T'HH:mm:ss'Z'", timezone="GMT")
 	private Instant sheduleDate;
 	
-	//Associação
+ 
+	/*@ManyToOne
+	@JoinColumn(name= "client_id")*/
 	@ManyToOne
-	@JoinColumn(name= "client_id")
+	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
 	private User client;
 	
 	@JsonIgnore
 	@OneToOne
-	@MapsId
 	private Payment payment;
 	
 	
 	
 	public Schedule() {}
+	
 
 	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User client, Payment payment) {
 		this.id = id;
@@ -47,7 +53,7 @@ public class Schedule implements Serializable {
 		this.client = client;
 		this.payment= payment;
 	}
-
+	
 	public Long getId() {
 		return id;
 	}
@@ -65,7 +71,15 @@ public class Schedule implements Serializable {
 			this.scheduleStatus = scheduleStatus.getCode();
 		}
 	}
-
+	
+	public boolean checkStatus( ScheduleStatus scheduleStatus) {
+		if(scheduleStatus.getCode()==1) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 	public Instant getSheduleDate() {
 		return sheduleDate;
 	}
@@ -73,7 +87,7 @@ public class Schedule implements Serializable {
 	public void setSheduleDate(Instant sheduleDate) {
 		this.sheduleDate = sheduleDate;
 	}
-
+	
 	public User getClient() {
 		return client;
 	}
