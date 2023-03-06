@@ -25,7 +25,7 @@ public class PaymentService {
 		return pay.get();
 	}
 
-	// Método de inserir user
+	// Método de inserir payment
 	public Payment insert(Payment obj) {
 		return repository.save(obj);
 	}

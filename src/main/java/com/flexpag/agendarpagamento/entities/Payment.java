@@ -2,6 +2,7 @@ package com.flexpag.agendarpagamento.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -10,11 +11,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="Pagamento")
+@Table(name ="payments")
 public class Payment implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -34,6 +36,9 @@ public class Payment implements Serializable{
 	
 	@OneToOne(mappedBy="payment", cascade= CascadeType.ALL)
 	private Schedule schedule;
+	
+	 @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+	   private List<TesteEntity> testeEntity;
 
 	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount, Instant dueDate, User client) {
 		super();
@@ -98,6 +103,16 @@ public class Payment implements Serializable{
 
 	public void setSchedule(Schedule schedule) {
 		this.schedule = schedule;
+	}
+	
+	
+
+	public List<TesteEntity> getTesteEntity() {
+		return testeEntity;
+	}
+
+	public void setTesteEntity(List<TesteEntity> testeEntity) {
+		this.testeEntity = testeEntity;
 	}
 
 	@Override
