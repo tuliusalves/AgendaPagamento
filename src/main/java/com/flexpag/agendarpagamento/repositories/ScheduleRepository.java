@@ -8,5 +8,6 @@ import com.flexpag.agendarpagamento.entities.Schedule;
 
 public interface ScheduleRepository extends JpaRepository<Schedule,Long> {
 	List<Schedule> findByName(String name);
+	
 
 }

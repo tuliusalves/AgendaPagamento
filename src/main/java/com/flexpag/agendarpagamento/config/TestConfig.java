@@ -55,8 +55,9 @@ public class TestConfig implements CommandLineRunner{
 		paymentRepository.saveAll(Arrays.asList(pay1,pay2));
 		scheduleRepository.saveAll(Arrays.asList(schedule1,schedule2,schedule3));
 		
-		Schedule test = new Schedule(null,"Tercio",ScheduleStatus.PAID, Instant.parse("2020-06-20T19:50:07Z"),user1,pay2);
-		testRep.saveAll(Arrays.asList(test));
+		Schedule test1 = new Schedule(null,"Tercio",ScheduleStatus.PENDING, Instant.parse("2020-06-20T19:50:07Z"),user1,pay2);
+		Schedule test2 = new Schedule(null,"Talis",ScheduleStatus.PAID, Instant.parse("2021-06-20T19:50:07Z"),user2,pay1);
+		testRep.saveAll(Arrays.asList(test1,test2));
 		
 	}
 	
