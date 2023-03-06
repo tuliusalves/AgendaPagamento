@@ -32,7 +32,7 @@ public class Payment implements Serializable{
 	//Criando associação com usuário
 	@ManyToOne
 	@JoinColumn(name= "client_id")
-	private User client;
+	private User user;
 	
 	@OneToOne(mappedBy="payment", cascade= CascadeType.ALL)
 	private Schedule schedule;
@@ -40,13 +40,13 @@ public class Payment implements Serializable{
 	 @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
 	   private List<TesteEntity> testeEntity;
 
-	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount, Instant dueDate, User client) {
+	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount, Instant dueDate, User user) {
 		super();
 		this.identificationNumber = identificationNumber;
 		this.recipientBank = recipientBank;
 		this.paymentAmount = paymentAmount;
 		this.dueDate = dueDate;
-		this.client = client;
+		this.user = user;
 	}
 
 	public Long getidentificationNumber() {
@@ -87,12 +87,12 @@ public class Payment implements Serializable{
 		this.dueDate = dueDate;
 	}
 
-	public User getClient() {
-		return client;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserClient(User client) {
-		this.client = client;
+	public void setUserUser(User user) {
+		this.user = user;
 	}
 	
 	

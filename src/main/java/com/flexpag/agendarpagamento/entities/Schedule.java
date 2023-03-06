@@ -12,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -35,7 +34,7 @@ public class Schedule  {
 	@JoinColumn(name= "client_id")*/
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-	private User client;
+	private User user;
 	
 	@JsonIgnore
 	@OneToOne
@@ -46,11 +45,11 @@ public class Schedule  {
 	public Schedule() {}
 	
 
-	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User client, Payment payment) {
+	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User user, Payment payment) {
 		this.id = id;
 		setScheduleStatus(scheduleStatus);
 		this.sheduleDate = sheduleDate;
-		this.client = client;
+		this.user = user;
 		this.payment= payment;
 	}
 	
@@ -88,12 +87,12 @@ public class Schedule  {
 		this.sheduleDate = sheduleDate;
 	}
 	
-	public User getClient() {
-		return client;
+	public User getUser() {
+		return user;
 	}
 
-	public void setClient(User client) {
-		this.client = client;
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	
