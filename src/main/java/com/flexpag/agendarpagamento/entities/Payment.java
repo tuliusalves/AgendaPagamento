@@ -12,33 +12,29 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name ="payments")
-public class Payment implements Serializable{
+@Table(name = "payments")
+public class Payment implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	private Long identificationNumber;
 	private String recipientBank;
 	private Double paymentAmount;
-	/*Usando a anotação @JsonFormat
-	 *no formato("ano-mês-dia'T' hora:min:seg'Z', timezone="padrão universal grenuwich"*/
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern ="yyyy:MM:dd'T'HH:mm:ss'Z'", timezone="GMT")
+
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy:MM:dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant dueDate;
-	/*Falta por a data de vencimento e data débito*/
-	public Payment() {}
-	//Criando associação com usuário
+
 	@ManyToOne
-	@JoinColumn(name= "client_id")
+	@JoinColumn(name = "client_id")
 	private User user;
-	
-	@OneToOne(mappedBy="payment", cascade= CascadeType.ALL)
-	private Schedule schedule;
-	
-	 @OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
-	   private List<TesteEntity> testeEntity;
+
+	@OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
+	private List<Schedule> schedules;
+
+	public Payment() {
+	}
 
 	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount, Instant dueDate, User user) {
 		super();
@@ -76,12 +72,10 @@ public class Payment implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
+
 	public Instant getDueDate() {
 		return dueDate;
 	}
-
 
 	public void setDueDate(Instant dueDate) {
 		this.dueDate = dueDate;
@@ -94,25 +88,13 @@ public class Payment implements Serializable{
 	public void setUserUser(User user) {
 		this.user = user;
 	}
-	
-	
 
-	public Schedule getSchedule() {
-		return schedule;
+	public List<Schedule> getSchedules() {
+		return schedules;
 	}
 
-	public void setSchedule(Schedule schedule) {
-		this.schedule = schedule;
-	}
-	
-	
-
-	public List<TesteEntity> getTesteEntity() {
-		return testeEntity;
-	}
-
-	public void setTesteEntity(List<TesteEntity> testeEntity) {
-		this.testeEntity = testeEntity;
+	public void setSchedules(List<Schedule> schedules) {
+		this.schedules = schedules;
 	}
 
 	@Override
@@ -139,8 +121,5 @@ public class Payment implements Serializable{
 			return false;
 		return true;
 	}
-	
-	
-	
-	
+
 }
