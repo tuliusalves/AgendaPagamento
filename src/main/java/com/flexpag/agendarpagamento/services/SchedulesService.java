@@ -6,13 +6,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.flexpag.agendarpagamento.entities.Schedule;
-import com.flexpag.agendarpagamento.repositories.ScheduleRepository;
+import com.flexpag.agendarpagamento.entities.Schedules;
+import com.flexpag.agendarpagamento.repositories.SchedulesRepository;
 
 @Service
-public class ScheduleService {
+public class SchedulesService {
 	@Autowired
-	ScheduleRepository repository;
+	SchedulesRepository repository;
 
 	public void delete(Long id) {
 		repository.deleteById(id);
@@ -22,18 +22,17 @@ public class ScheduleService {
 		repository.deleteAll();
 	}
 
-	public List<Schedule> findAll() {
+	public List<Schedules> findAll() {
 		return repository.findAll();
 	}
 
-	// Retornando pagamento por Id
-	public Schedule findById(Long id) {
-		Optional<Schedule> testeEntity = repository.findById(id);
+	public Schedules findById(Long id) {
+		Optional<Schedules> testeEntity = repository.findById(id);
 		return testeEntity.get();
 	}
 
-	public Schedule update(Long id, Schedule obj) {
-		Schedule entity = repository.getReferenceById(id);
+	public Schedules update(Long id, Schedules obj) {
+		Schedules entity = repository.getReferenceById(id);
 		if (entity.checkStatus(entity.getScheduleStatus()) != true) {
 			updateData(entity, obj);
 		}
@@ -41,15 +40,15 @@ public class ScheduleService {
 
 	}
 
-	private void updateData(Schedule entity, Schedule obj) {
+	private void updateData(Schedules entity, Schedules obj) {
 		entity.setSheduleDate(obj.getSheduleDate());
 	}
 
-	public Schedule save(Schedule obj) {
+	public Schedules save(Schedules obj) {
 		return repository.save(obj);
 	}
 	
-	public List<Schedule> findAllByScheduleStatus(int status) {
+	public List<Schedules> findAllByScheduleStatus(int status) {
 		return repository.findAllByScheduleStatus(status);
 	}
 

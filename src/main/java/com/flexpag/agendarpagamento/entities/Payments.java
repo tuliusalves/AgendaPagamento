@@ -2,23 +2,21 @@ package com.flexpag.agendarpagamento.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "payments")
-public class Payment implements Serializable {
+public class Payments implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long identificationNumber;
 	private String recipientBank;
 	private Double paymentAmount;
@@ -26,23 +24,15 @@ public class Payment implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy:MM:dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant dueDate;
 
-	@ManyToOne
-	@JoinColumn(name = "client_id")
-	private User user;
-	/*
-	@OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
-	private List<Schedule> schedules;*/
-
-	public Payment() {
+	public Payments() {
 	}
 
-	public Payment(Long identificationNumber, String recipientBank, Double paymentAmount, Instant dueDate, User user) {
+	public Payments(Long identificationNumber, String recipientBank, Double paymentAmount, Instant dueDate) {
 		super();
 		this.identificationNumber = identificationNumber;
 		this.recipientBank = recipientBank;
 		this.paymentAmount = paymentAmount;
 		this.dueDate = dueDate;
-		this.user = user;
 	}
 
 	public Long getidentificationNumber() {
@@ -81,22 +71,6 @@ public class Payment implements Serializable {
 		this.dueDate = dueDate;
 	}
 
-	public User getUser() {
-		return user;
-	}
-
-	public void setUserUser(User user) {
-		this.user = user;
-	}
-	/*
-	public List<Schedule> getSchedules() {
-		return schedules;
-	}
-
-	public void setSchedules(List<Schedule> schedules) {
-		this.schedules = schedules;
-	}*/
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -113,7 +87,7 @@ public class Payment implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Payment other = (Payment) obj;
+		Payments other = (Payments) obj;
 		if (identificationNumber == null) {
 			if (other.identificationNumber != null)
 				return false;

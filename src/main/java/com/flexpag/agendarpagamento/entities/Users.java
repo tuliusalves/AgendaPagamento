@@ -1,19 +1,16 @@
 package com.flexpag.agendarpagamento.entities;
 
 import java.io.Serializable;
-import java.util.List;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User implements Serializable {
+public class Users implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -21,14 +18,11 @@ public class User implements Serializable {
 	private Long id;
 	private String name;
 	private String cpf;
-	/*
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Schedule> schedules;*/
 
-	public User() {
+	public Users() {
 	}
 
-	public User(Long id, String name, String cpf) {
+	public Users(Long id, String name, String cpf) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -58,15 +52,7 @@ public class User implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	/*
-	public List<Schedule> getSchedules() {
-		return schedules;
-	}
 
-	public void setsShedules(List<Schedule> schedules) {
-		this.schedules = schedules;
-	}
-	*/
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,7 +69,7 @@ public class User implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		User other = (User) obj;
+		Users other = (Users) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
