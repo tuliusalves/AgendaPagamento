@@ -19,7 +19,7 @@ import com.flexpag.agendarpagamento.entities.User;
 import com.flexpag.agendarpagamento.services.UserService;
 
 @RestController
-@RequestMapping(value = "/tb_user")
+@RequestMapping(value = "/users")
 public class UserController {
 	@Autowired
 	private UserService service;

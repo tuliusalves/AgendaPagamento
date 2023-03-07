@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flexpag.agendarpagamento.entities.Schedule;
-import com.flexpag.agendarpagamento.entities.enums.ScheduleStatus;
 import com.flexpag.agendarpagamento.repositories.ScheduleRepository;
 
 @Service
@@ -49,9 +48,10 @@ public class ScheduleService {
 	public Schedule save(Schedule obj) {
 		return repository.save(obj);
 	}
-
-	public List<Schedule> findByTesteName(String name) {
-		return repository.findByName(name);
+	
+	public List<Schedule> findAllByScheduleStatus(int status) {
+		return repository.findAllByScheduleStatus(status);
 	}
+
 	
 }
