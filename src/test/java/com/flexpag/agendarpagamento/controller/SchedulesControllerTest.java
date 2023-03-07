@@ -6,7 +6,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.Instant;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -50,20 +49,14 @@ public class SchedulesControllerTest {
     }
 
 
-
-
     @Test
     void testFindAll() {
-        // Configura o comportamento simulado do serviço para retornar as entidades de agendamento simuladas
         when(scheduleService.findAll()).thenReturn(mockScheduleEntities);
 
-        // Chama o método findAll() no controlador de agendamento
         ResponseEntity<List<Schedules>> response = scheduleController.findAll();
 
-        // Verifica se a resposta tem o código de status HTTP correto (200 OK)
         assertEquals(200, response.getStatusCodeValue());
 
-        // Verifica se a lista de entidades de agendamento na resposta é igual à lista simulada
         List<Schedules> scheduleEntities = response.getBody();
         assertEquals(mockScheduleEntities, scheduleEntities);
     }
@@ -76,16 +69,28 @@ public class SchedulesControllerTest {
 
         Schedules schedule1 = new Schedules(null, ScheduleStatus.PENDING, Instant.parse("2020-06-20T19:50:07Z"), user1,
                 pay1);
-        // Simulate the call to the service
         when(scheduleService.findById(1L)).thenReturn(schedule1);
 
-        // Call the controller method
         ResponseEntity<Schedules> responseEntity = scheduleController.findById(1l);
 
-        // Verify the response
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertEquals(schedule1, responseEntity.getBody());
     }
+    @Test
+    void testUpdate() {
+        Long id = 2L;
 
+        Users user1 = new Users(null, "Túlius", "012104505");
+        Payments pay1 = new Payments(null, "Bradesco", 150.50, Instant.parse("2020-06-20T19:50:07Z"));
+        Schedules updatedScheduleEntity  = new Schedules(null, ScheduleStatus.PENDING, Instant.parse("2020-06-20T19:50:07Z"), user1,
+                pay1);
+
+        when(scheduleService.update(id, updatedScheduleEntity)).thenReturn(updatedScheduleEntity);
+
+        ResponseEntity<Schedules> responseEntity = scheduleController.update(id, updatedScheduleEntity);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertEquals(updatedScheduleEntity, responseEntity.getBody());
+    }
 
 }
