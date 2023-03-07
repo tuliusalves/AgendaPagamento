@@ -17,7 +17,7 @@ import com.flexpag.agendarpagamento.entities.Payment;
 import com.flexpag.agendarpagamento.services.PaymentService;
 
 @RestController
-@RequestMapping(value ="/payment")
+@RequestMapping(value ="/payments")
 public class PaymentController {
 	
 	@Autowired

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.flexpag.agendarpagamento.entities.Schedule;
@@ -67,8 +68,15 @@ public class ScheduleController {
 
 	@PostMapping
 	public ResponseEntity<Schedule> create(@RequestBody Schedule obj) {
-		Schedule savescheduleEntity = scheduleService.save(obj);
-		return ResponseEntity.status(HttpStatus.CREATED).body(savescheduleEntity);
+		try {
+			
+
+			      Schedule savedSchedule = scheduleService.save(obj);
+	        
+	        return ResponseEntity.status(HttpStatus.CREATED).body(savedSchedule);
+	    } catch (Exception e) {
+	        throw new RuntimeException("Erro ao criar agendamento",e);
+	    }
 	}
 
 	@GetMapping
@@ -88,13 +96,10 @@ public class ScheduleController {
 		obj = scheduleService.update(id, obj);
 		return ResponseEntity.ok().body(obj);
 	}
-
-	@GetMapping("/name/{name}")
-	public ResponseEntity<List<Schedule>> findByTesteName(@PathVariable String name) {
-		List<Schedule> testes = scheduleService.findByTesteName(name);
-		if (testes.isEmpty()) {
-			return ResponseEntity.noContent().build();
-		}
-		return ResponseEntity.ok(testes);
+	@GetMapping("/search")
+	public List<Schedule> searchScheduleByStatus(@RequestParam String status) {
+		return scheduleService.findAllByScheduleStatus(Integer.parseInt(status));
 	}
+	
+
 }
