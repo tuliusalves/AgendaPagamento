@@ -16,49 +16,28 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "schedules")
-public class Schedule {
+public class Schedules {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	
 	private Integer scheduleStatus;
-	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'", timezone="GMT")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant sheduleDate;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-	private User user;
-	
+	private Users user;
+
 	@OneToOne
 	@JoinColumn(name = "payment_id", referencedColumnName = "identificationNumber", nullable = false)
-	private Payment payment;
+	private Payments payment;
 
-	public Schedule() {
+	public Schedules() {
 	}
 
-	/*
-	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User user) {
-		super();
-		this.id = id;
-		setScheduleStatus(scheduleStatus);
-		this.sheduleDate = sheduleDate;
-		this.user = user;
-	}*/
-
-
-	/*
-	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate) {
-		super();
-		this.id = id;
-		setScheduleStatus(scheduleStatus);
-		this.sheduleDate = sheduleDate;
-	}*/
-
-
-	
-	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User user, Payment payment) {
+	public Schedules(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, Users user, Payments payment) {
 		super();
 		this.id = id;
 		setScheduleStatus(scheduleStatus);
@@ -67,7 +46,6 @@ public class Schedule {
 		this.payment = payment;
 	}
 
-
 	public Long getId() {
 		return id;
 	}
@@ -75,54 +53,46 @@ public class Schedule {
 	public void setId(Long id) {
 		this.id = id;
 	}
- 
 
 	public Instant getSheduleDate() {
 		return sheduleDate;
 	}
 
-
-
 	public void setSheduleDate(Instant sheduleDate) {
 		this.sheduleDate = sheduleDate;
 	}
-
-
 
 	public ScheduleStatus getScheduleStatus() {
 		return ScheduleStatus.valueOf(scheduleStatus);
 	}
 
 	public void setScheduleStatus(ScheduleStatus scheduleStatus) {
-		if(scheduleStatus != null) {
+		if (scheduleStatus != null) {
 			this.scheduleStatus = scheduleStatus.getCode();
 		}
 	}
-	
-	public boolean checkStatus( ScheduleStatus scheduleStatus) {
-		if(scheduleStatus.getCode()==1) {
+
+	public boolean checkStatus(ScheduleStatus scheduleStatus) {
+		if (scheduleStatus.getCode() == 1) {
 			return true;
-		}else {
+		} else {
 			return false;
 		}
 	}
-	
 
-	public User getUser() {
+	public Users getUser() {
 		return user;
 	}
 
-
-	public void setUser(User user) {
+	public void setUser(Users user) {
 		this.user = user;
 	}
-	
 
-	public Payment getPayment() {
+	public Payments getPayment() {
 		return payment;
 	}
 
-	public void setPayment(Payment payment) {
+	public void setPayment(Payments payment) {
 		this.payment = payment;
 	}
 
@@ -134,8 +104,6 @@ public class Schedule {
 		return result;
 	}
 
-
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -144,7 +112,7 @@ public class Schedule {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Schedule other = (Schedule) obj;
+		Schedules other = (Schedules) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -152,7 +120,5 @@ public class Schedule {
 			return false;
 		return true;
 	}
-	
-	
 
 }
