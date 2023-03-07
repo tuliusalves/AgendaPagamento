@@ -21,9 +21,9 @@ public class User implements Serializable {
 	private Long id;
 	private String name;
 	private String cpf;
-
+	/*
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-	private List<Schedule> schedules;
+	private List<Schedule> schedules;*/
 
 	public User() {
 	}
@@ -58,7 +58,7 @@ public class User implements Serializable {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-
+	/*
 	public List<Schedule> getSchedules() {
 		return schedules;
 	}
@@ -66,7 +66,7 @@ public class User implements Serializable {
 	public void setsShedules(List<Schedule> schedules) {
 		this.schedules = schedules;
 	}
-
+	*/
 	@Override
 	public int hashCode() {
 		final int prime = 31;

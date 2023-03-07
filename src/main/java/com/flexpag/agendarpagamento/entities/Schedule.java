@@ -26,7 +26,7 @@ public class Schedule {
 	private Integer scheduleStatus;
 	@JsonFormat(shape= JsonFormat.Shape.STRING, pattern ="yyyy-MM-dd'T'HH:mm:ss'Z'", timezone="GMT")
 	private Instant sheduleDate;
-
+	
 	@ManyToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
 	private User user;
@@ -38,8 +38,26 @@ public class Schedule {
 	public Schedule() {
 	}
 
-	
+	/*
+	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User user) {
+		super();
+		this.id = id;
+		setScheduleStatus(scheduleStatus);
+		this.sheduleDate = sheduleDate;
+		this.user = user;
+	}*/
 
+
+	/*
+	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate) {
+		super();
+		this.id = id;
+		setScheduleStatus(scheduleStatus);
+		this.sheduleDate = sheduleDate;
+	}*/
+
+
+	
 	public Schedule(Long id, ScheduleStatus scheduleStatus, Instant sheduleDate, User user, Payment payment) {
 		super();
 		this.id = id;
@@ -88,7 +106,25 @@ public class Schedule {
 			return false;
 		}
 	}
+	
 
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
+	}
 
 	@Override
 	public int hashCode() {

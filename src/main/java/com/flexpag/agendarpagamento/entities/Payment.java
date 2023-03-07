@@ -29,9 +29,9 @@ public class Payment implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User user;
-
+	/*
 	@OneToMany(mappedBy = "payment", cascade = CascadeType.ALL)
-	private List<Schedule> schedules;
+	private List<Schedule> schedules;*/
 
 	public Payment() {
 	}
@@ -88,14 +88,14 @@ public class Payment implements Serializable {
 	public void setUserUser(User user) {
 		this.user = user;
 	}
-
+	/*
 	public List<Schedule> getSchedules() {
 		return schedules;
 	}
 
 	public void setSchedules(List<Schedule> schedules) {
 		this.schedules = schedules;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {
