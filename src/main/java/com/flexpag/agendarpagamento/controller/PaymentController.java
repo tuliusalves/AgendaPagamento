@@ -21,22 +21,22 @@ import com.flexpag.agendarpagamento.services.PaymentService;
 public class PaymentController {
 	
 	@Autowired
-	private PaymentService service;
+	private PaymentService paymentService;
 	@GetMapping
 	public ResponseEntity<List<Payment>> findAll(){
-		List<Payment> payments= service.findAll();
+		List<Payment> payments= paymentService.findAll();
 		return ResponseEntity.ok().body(payments);
 	}
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Payment> findById(@PathVariable Long id){
-		Payment pay= service.findById(id);
+		Payment pay= paymentService.findById(id);
 		return ResponseEntity.ok().body(pay);
 	}
 	
 	@PostMapping
 	public ResponseEntity<Payment> insert(@RequestBody Payment obj){
-		obj = service.insert(obj);
+		obj = paymentService.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
 				.buildAndExpand(obj.getidentificationNumber()).toUri();
 		return ResponseEntity.created(uri).body(null);
